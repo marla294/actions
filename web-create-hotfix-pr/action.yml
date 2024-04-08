@@ -39,12 +39,13 @@ runs:
       shell: bash
       run: echo "rc_branch=$(date +${{ inputs.rcBranchPrefix }}-%Y.%m.%d.%H%M)" >> $GITHUB_ENV
 
-    - name: Create Stage Hotfix RC Branch 🛠
+    - name: Create ${{ inputs.toBranch }} Hotfix RC Branch 🛠
       shell: bash
       run: |
         git config --global user.name "${GITHUB_ACTOR}"
         git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch --all --unshallow
+        git checkout ${{ inputs.toBranch }}
         git pull
         git checkout -b ${{ env.rc_branch }}
         git cherry-pick ${{ github.sha }}
