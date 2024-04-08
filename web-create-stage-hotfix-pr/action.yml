@@ -37,7 +37,7 @@ runs:
 
     - name: Set RC Branch Name
       shell: bash
-      run: echo "rc_branch=$(date +${{ inputs.rcBranchPrefix }}/%Y.%m.%d.%H%M)" >> $GITHUB_ENV
+      run: echo "rc_branch=$(date +${{ inputs.rcBranchPrefix }}-%Y.%m.%d.%H%M)" >> $GITHUB_ENV
 
     - name: Create Stage Hotfix RC Branch 🛠
       shell: bash
