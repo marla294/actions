@@ -54,7 +54,7 @@ runs:
     - name: Generate Pull Request Body
       shell: bash
       run: |
-        echo "👑 *An automated PR to cherry-pick hotfix from *${{ inputs.fromBranch }}* to *${{ inputs.toBranch }}* 👑" > pr_msg
+        echo "👑 An automated PR to cherry-pick hotfix from *${{ inputs.fromBranch }}* to *${{ inputs.toBranch }}* 👑" > pr_msg
 
     - name: Get Pull Request Body
       id: vars
