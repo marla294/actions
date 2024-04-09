@@ -1,25 +1,31 @@
-# Web - Create Release PR
+# Web - Create Hotfix Release PR
 
-Creates a release candidate branch and pull request (PR)
+Creates a hotfix release candidate branch and pull request (PR)
 
 ## Usage
 
 ```yaml
-name: Prod - Create Release Candidate
+name: Stage - Create Hotfix Release Candidate (RC)
 
 on:
-  workflow_dispatch:
-
-env:
-  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+  pull_request:
+    types:
+      - closed
+    branches:
+      - develop
 
 jobs:
-  create-release-pr:
-    uses: resideo/actions/web-create-release-pr@master
-    with:
-      fromBranch: stage
-      toBranch: master
-      rcBranchPrefix: release
-      prTitleHeader: (Prod)
-      prLabel: Prod Release
+  stage-hotfix-rc:
+    name: Stage - Create Hotfix Release Candidate
+    if: |
+      github.event.pull_request.merged == true && (contains(github.head_ref, 'hotfix/') || contains(github.event.pull_request.labels.*.name, 'hotfix') || contains(github.event.pull_request.labels.*.name, 'Hotfix'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/web-create-hotfix-pr@master
+        with:
+          fromBranch: develop
+          toBranch: stage
+          rcBranchPrefix: stage-release/hotfix
+          prTitleHeader: '(Stage) (Hotfix)'
+          prLabel: Hotfix,Stage Release
 ```
